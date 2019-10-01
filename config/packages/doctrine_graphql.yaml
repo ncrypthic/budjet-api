@@ -1,0 +1,4 @@
+lla_doctrine_graphql:
+    entity_manager_service: doctrine.orm.default_entity_manager
+    logger_service: logger
+    debug: true

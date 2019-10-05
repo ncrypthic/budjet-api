@@ -12,6 +12,8 @@ class Expense
     /**
      * @ORM\Column(name="expense_id", type="string")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      * @var string
      */
     private $id;
@@ -48,9 +50,16 @@ class Expense
      */
     private $category;
 
+    public function setId(string $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?string
     {
-        return $this->id;
+        return (string)$this->id;
     }
 
     public function getDescription(): ?string

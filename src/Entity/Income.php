@@ -16,7 +16,7 @@ class Income
      */
     private $id;
     /**
-     * @ORM\ManyToOne(targetEntity="Period", inversedBy="income")
+     * @ORM\ManyToOne(targetEntity="Period", inversedBy="incomes")
      * @ORM\JoinColumn(name="period_id", referencedColumnName="period_id")
      * @var Period
      */
@@ -47,9 +47,16 @@ class Income
      */
     private $trxDate;
 
-    public function getId()
+    public function setId(string $id): self
     {
-        return $this->id;
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?string
+    {
+        return (string)$this->id;
     }
 
     public function getTitle(): ?string

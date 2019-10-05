@@ -14,6 +14,8 @@ class Period
     /**
      * @ORM\Column(name="period_id", type="uuid")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      * @var string
      */
     private $id;
@@ -38,7 +40,7 @@ class Period
      * @ORM\JoinColumn(name="period_id", referencedColumnName="period_id")
      * @var []Income
      */
-    private $income;
+    private $incomes;
     /**
      * @ORM\OneToMany(targetEntity="Budget", mappedBy="period")
      * @ORM\JoinColumn(name="period_id", referencedColumnName="period_id")
@@ -49,13 +51,20 @@ class Period
     public function __construct()
     {
         $this->authorizations = new ArrayCollection();
-        $this->income = new ArrayCollection();
+        $this->incomes = new ArrayCollection();
         $this->budgets = new ArrayCollection();
     }
 
-    public function getId()
+    public function setId(string $id): self
     {
-        return $this->id;
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?string
+    {
+        return (string)$this->id;
     }
 
     public function getStartDate(): ?\DateTimeInterface
@@ -116,15 +125,15 @@ class Period
     /**
      * @return Collection|Income[]
      */
-    public function getIncome(): Collection
+    public function getIncomes(): Collection
     {
-        return $this->income;
+        return $this->incomes;
     }
 
     public function addIncome(Income $income): self
     {
-        if (!$this->income->contains($income)) {
-            $this->income[] = $income;
+        if (!$this->incomes->contains($income)) {
+            $this->incomes[] = $income;
             $income->setPeriod($this);
         }
 
@@ -133,8 +142,8 @@ class Period
 
     public function removeIncome(Income $income): self
     {
-        if ($this->income->contains($income)) {
-            $this->income->removeElement($income);
+        if ($this->incomes->contains($income)) {
+            $this->incomes->removeElement($income);
             // set the owning side to null (unless already changed)
             if ($income->getPeriod() === $this) {
                 $income->setPeriod(null);

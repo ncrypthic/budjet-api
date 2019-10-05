@@ -12,6 +12,8 @@ class Income
     /**
      * @ORM\Column(name="income_id", type="uuid")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      * @var string
      */
     private $id;

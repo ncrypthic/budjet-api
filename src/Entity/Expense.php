@@ -43,12 +43,6 @@ class Expense
      * @var \DateTime
      */
     private $trxDate;
-    /**
-     * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="category_id")
-     * @var Category
-     */
-    private $category;
 
     public function setId(string $id): self
     {
@@ -118,18 +112,6 @@ class Expense
     public function setBudget(?Budget $budget): self
     {
         $this->budget = $budget;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
